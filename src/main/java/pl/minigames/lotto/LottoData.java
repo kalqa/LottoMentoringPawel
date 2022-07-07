@@ -3,11 +3,7 @@ package pl.minigames.lotto;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -47,26 +43,25 @@ class LottoData {
         }
         return sb.toString();
     }
-    private void load(){
+    private void load() {
         numbersDrawn = new HashMap<>();
-        try (Scanner scanner = new Scanner(new FileReader("LottoData/src/main/resources/lotto.txt"))){
+        try (Scanner scanner = new Scanner(new FileReader("LottoData/src/main/resources/lotto.txt"))) {
             scanner.useDelimiter(",");
-            while(scanner.hasNextLine()) {
+            while (scanner.hasNextLine()) {
                 int index = scanner.nextInt();
                 scanner.skip(scanner.delimiter());
                 String values = scanner.nextLine();
                 Set<Integer> set = Stream.of(values.split(";"))
-                                         .collect(Collectors.toSet())
-                                         .stream()
-                                         .map(i -> Integer.parseInt(i))
-                                         .collect(Collectors.toSet());
-                numbersDrawn.put(index,set);
+                        .collect(Collectors.toSet())
+                        .stream()
+                        .map(i -> Integer.parseInt(i))
+                        .collect(Collectors.toSet());
+                numbersDrawn.put(index, set);
             }
 
-        } catch(IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
-    }
 // Below method to manually print numbers in LottoData.LottoData - dev check purpose
 //    private void printNumbers(Set<Integer> set){
 //        StringBuilder stringBuilder = new StringBuilder("Numbers are: ");
@@ -76,7 +71,12 @@ class LottoData {
 //        }
 //        System.out.println(stringBuilder);
 //    }
-    public Set<Integer> getWithDrawalSet(Integer i){
-        return (i>-1&&i<numbersDrawn.size()) ? numbersDrawn.get(i): new HashSet<>();
+    }
+        public Set<Integer> getWithDrawalSet(Integer i){
+        try{return (i>-1&&i<numbersDrawn.size()) ? numbersDrawn.get(i): new HashSet<>();
+        }catch (Exception e){
+            e.getMessage();
+        }
+        return null; //zrobić coś żeby nie zwracało null
     }
 }

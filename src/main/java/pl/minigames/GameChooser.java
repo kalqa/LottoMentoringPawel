@@ -1,20 +1,22 @@
 package pl.minigames;
 
+import pl.minigames.lotto.LottoFacade;
+
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
-import pl.minigames.lotto.LottoFacade;
 
 class GameChooser {
 
     private final Map<String, String> availableGames = new HashMap<>();
+    private static final InputReciver inputReciver = InputReciver.getInstance();
+    private static final MessagePrinter MESSAGE_PRINTER = new MessagePrinter();
 
     public GameChooser() {
         initialize();
     }
 
     private void initialize() {
-        availableGames.put("Lotto", "Loading, please wait");
+        availableGames.put("Lotto", "Loading, please wait"); //make import of games via file
         availableGames.put("Batlleships", "Sorry not ready yet..");
         availableGames.put("Solitare", "Ups, not ready!");
     }
@@ -40,27 +42,28 @@ class GameChooser {
     }
 
     private String choosingGame() {
-        System.out.println("Please choose a game");
-        try {
-            Scanner sc = new Scanner(System.in);
-            boolean chooseGame = true;
-            while (chooseGame) {
-                String choosenGame = sc.nextLine();
-                if (validateGame(choosenGame)) {
-                    printGameReadyState(choosenGame);
-                    return choosenGame;
-                } else System.out.println("Sorry no such game in base");
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        chooseGameMessage();
+        boolean chooseGame = true;
+        while (chooseGame) {
+            String choosenGame = inputReciver.getString();
+            if (validateGame(choosenGame)) {
+                printGameReadyState(choosenGame);
+                return choosenGame;
+            } else gameNotInBaseMessage();
         }
         return "Probably an error of some kind occured";
     }
 
-    public void printGames() {
-        for (String s : availableGames.keySet()) {
-            System.out.println("We have a " + s + " game in database right now");
-        }
+    private void gameNotInBaseMessage() {
+        System.out.println("Sorry no such game in base");
+    }
+
+    private void chooseGameMessage() {
+        System.out.println("Please choose a game");
+    }
+
+    public Map<String, String> getAvailableGames() {
+        return availableGames;
     }
 
     private boolean validateGame(String s) {
@@ -75,6 +78,4 @@ class GameChooser {
         LottoFacade clientLotto = new LottoFacade();
         clientLotto.start();
     }
-
-
 }

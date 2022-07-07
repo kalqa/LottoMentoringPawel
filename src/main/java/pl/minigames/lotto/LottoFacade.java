@@ -1,10 +1,12 @@
 package pl.minigames.lotto;
 
+import pl.minigames.IGame;
+
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
 
-public class LottoFacade {
+public class LottoFacade implements IGame {
     public LottoFacade() {
     }
 
@@ -40,6 +42,7 @@ public class LottoFacade {
         return false;
     }
 
+    @Override
     public void start() {
         System.out.println("Type 1 to start game, Type 2 to check numbers by drawing number");
         try (Scanner scanner = new Scanner(System.in)) {
