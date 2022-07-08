@@ -23,7 +23,7 @@ class LottoData {
 
     public void saveData(Set<Integer> set){
         addSetToMap(set);
-        try (FileWriter locFile = new FileWriter("LottoData/src/main/resources/lotto.txt")){
+        try (FileWriter locFile = new FileWriter("src/main/java/pl/minigames/lotto/lotto.txt")){
             for(Integer i: numbersDrawn.keySet()){
             locFile.write(i+","+convertSetToString(numbersDrawn.get(i))+ "\n");}
         } catch (IOException e){
@@ -45,7 +45,7 @@ class LottoData {
     }
     private void load() {
         numbersDrawn = new HashMap<>();
-        try (Scanner scanner = new Scanner(new FileReader("LottoData/src/main/resources/lotto.txt"))) {
+        try (Scanner scanner = new Scanner(new FileReader("src/main/java/pl/minigames/lotto/lotto.txt"))) {
             scanner.useDelimiter(",");
             while (scanner.hasNextLine()) {
                 int index = scanner.nextInt();

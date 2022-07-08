@@ -1,13 +1,16 @@
 package pl.minigames.lotto;
 
 import pl.minigames.IGame;
+import pl.minigames.IInputReciver;
 
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
 
 public class LottoFacade implements IGame {
-    public LottoFacade() {
+    private final IInputReciver INPUT_RECIVER;
+    public LottoFacade(IInputReciver inputReciver) {
+        this.INPUT_RECIVER = inputReciver;
     }
 
     public Set<Integer> getNumbersFromUser() {

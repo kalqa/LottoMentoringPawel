@@ -2,17 +2,19 @@ package pl.minigames;
 
 import java.util.Scanner;
 
- class InputReciver {
+ class ScannerInputReciver implements IInputReciver{
     private final Scanner scanner = new Scanner(System.in);
 
-    private InputReciver() {
+    private ScannerInputReciver() {
     }
-    public static InputReciver getInstance() {
-        return new InputReciver();
+    public static ScannerInputReciver getInstance() {
+        return new ScannerInputReciver();
     }
+    @Override
     public String getString(){
-        return scanner.nextLine();
+        return scanner.nextLine().toUpperCase();
     }
+    @Override
     public Integer getInt(){
         int a = -1;
         try{

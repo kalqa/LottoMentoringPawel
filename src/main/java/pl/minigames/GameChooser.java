@@ -1,81 +1,73 @@
 package pl.minigames;
 
+import pl.minigames.batlleships.BatlleShipsFacade;
 import pl.minigames.lotto.LottoFacade;
+import pl.minigames.solitare.SolitareFacade;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.HashSet;
+import java.util.Set;
 
 class GameChooser {
 
-    private final Map<String, String> availableGames = new HashMap<>();
-    private static final InputReciver inputReciver = InputReciver.getInstance();
-    private static final MessagePrinter MESSAGE_PRINTER = new MessagePrinter();
+    private final Set<String> availableGames = new HashSet<>();
+    private final IInputReciver INPUT_RECIVER;
+    private final MessagePrinter MESSAGE_PRINTER = new MessagePrinter();
+    private IGame iGame;
+    private final String CHOOSE_GAME_MESSAGE = "Please choose a game";
+    private final String NO_GAME_IN_BASE_MESSAGE = "Sorry no such game in base";
 
-    public GameChooser() {
+    public GameChooser(IInputReciver inputReceiver) {
         initialize();
+        this.INPUT_RECIVER = inputReceiver;
     }
 
     private void initialize() {
-        availableGames.put("Lotto", "Loading, please wait"); //make import of games via file
-        availableGames.put("Batlleships", "Sorry not ready yet..");
-        availableGames.put("Solitare", "Ups, not ready!");
+        availableGames.add("LOTTO"); //make import of games via file
+        availableGames.add("BATLLESHIPS");
+        availableGames.add("SOLITARE");
+    }
+    public void InitializeChoosenGame() {
+        initializeGame(selectingGame());
     }
 
-    public void choose() {
-        String game = chooseGame();
-        initializeGame(game);
+    private void initializeGame(IGame game) {
+        game.start();
     }
 
-    private String chooseGame() {
-        String game = "";
-        while (!game.equals("Lotto")) {
-            game = choosingGame();
+    private IGame selectingGame() {
+        MESSAGE_PRINTER.print(CHOOSE_GAME_MESSAGE);
+        boolean validGame = false;
+        while (!validGame) {
+            String gameChosenByUser = INPUT_RECIVER.getString();
+            if (validateGame(gameChosenByUser)) {
+                return returnIGameClass(gameChosenByUser);
+            } else {
+                MESSAGE_PRINTER.print(NO_GAME_IN_BASE_MESSAGE);
+            }
         }
-        return game;
+        return null;
     }
 
-    private void initializeGame(String s) {
-        switch (s) {
-            case "Lotto":
-                startLotto();
+    private IGame returnIGameClass(String gameChosenByUser) {
+        switch (gameChosenByUser) {
+            case "LOTTO":
+                return new LottoFacade(ScannerInputReciver.getInstance());
+            case "BATLLESHIPS":
+                return new BatlleShipsFacade();
+            case "SOLITARE":
+                return new SolitareFacade();
+            default:
+                break;
         }
+        return null;
     }
 
-    private String choosingGame() {
-        chooseGameMessage();
-        boolean chooseGame = true;
-        while (chooseGame) {
-            String choosenGame = inputReciver.getString();
-            if (validateGame(choosenGame)) {
-                printGameReadyState(choosenGame);
-                return choosenGame;
-            } else gameNotInBaseMessage();
-        }
-        return "Probably an error of some kind occured";
-    }
 
-    private void gameNotInBaseMessage() {
-        System.out.println("Sorry no such game in base");
-    }
-
-    private void chooseGameMessage() {
-        System.out.println("Please choose a game");
-    }
-
-    public Map<String, String> getAvailableGames() {
+    public Set<String> getAvailableGames() {
         return availableGames;
     }
 
     private boolean validateGame(String s) {
-        return availableGames.containsKey(s) ? true : false;
-    }
-
-    private void printGameReadyState(String s) {
-        System.out.println(availableGames.get(s));
-    }
-
-    private void startLotto() {
-        LottoFacade clientLotto = new LottoFacade();
-        clientLotto.start();
+        return availableGames.contains(s) ? true : false;
     }
 }
