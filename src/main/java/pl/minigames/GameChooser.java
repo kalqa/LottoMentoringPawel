@@ -4,12 +4,12 @@ import pl.minigames.batlleships.BatlleShipsFacade;
 import pl.minigames.lotto.LottoFacade;
 import pl.minigames.solitare.SolitareFacade;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 class GameChooser {
 
-    private final Set<String> availableGames = new HashSet<>();
+    private final Map<String,IGame> availableGames = new HashMap<>();
     private final IInputReciver INPUT_RECIVER;
     private final MessagePrinter MESSAGE_PRINTER = new MessagePrinter();
     private IGame iGame;
@@ -17,14 +17,14 @@ class GameChooser {
     private final String NO_GAME_IN_BASE_MESSAGE = "Sorry no such game in base";
 
     public GameChooser(IInputReciver inputReceiver) {
-        initialize();
         this.INPUT_RECIVER = inputReceiver;
+        initialize();
     }
 
     private void initialize() {
-        availableGames.add("LOTTO"); //make import of games via file
-        availableGames.add("BATLLESHIPS");
-        availableGames.add("SOLITARE");
+        availableGames.put("LOTTO", new LottoFacade(INPUT_RECIVER)); // make import list via file?
+        availableGames.put("BATLLESHIPS", new BatlleShipsFacade());
+        availableGames.put("SOLITARE", new SolitareFacade());
     }
     public void InitializeChoosenGame() {
         initializeGame(selectingGame());
@@ -49,25 +49,15 @@ class GameChooser {
     }
 
     private IGame returnIGameClass(String gameChosenByUser) {
-        switch (gameChosenByUser) {
-            case "LOTTO":
-                return new LottoFacade(ScannerInputReciver.getInstance());
-            case "BATLLESHIPS":
-                return new BatlleShipsFacade();
-            case "SOLITARE":
-                return new SolitareFacade();
-            default:
-                break;
-        }
-        return null;
+        return availableGames.get(gameChosenByUser);
     }
 
 
-    public Set<String> getAvailableGames() {
+    public Map<String,IGame> getAvailableGames() {
         return availableGames;
     }
 
     private boolean validateGame(String s) {
-        return availableGames.contains(s) ? true : false;
+        return availableGames.containsKey(s) ? true : false;
     }
 }

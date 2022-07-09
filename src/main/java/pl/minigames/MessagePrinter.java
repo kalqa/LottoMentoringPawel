@@ -1,6 +1,6 @@
 package pl.minigames;
 
-import java.util.Set;
+import java.util.Map;
 
 class MessagePrinter {
     private static final String END_OF_PROGRAM = "End of program";
@@ -21,8 +21,8 @@ class MessagePrinter {
         print(WELCOME_MESSAGE_TYPE_2);
         print(WELCOME_MESSAGE_TYPE_3);
     }
-    void printGames(Set<String> availableGames) {
-        for (String s : availableGames) {
+    void printGames(Map<String,IGame> availableGames) {
+        for (String s : availableGames.keySet()) {
             print("We have a " + s + " game in database right now");
         }
     }

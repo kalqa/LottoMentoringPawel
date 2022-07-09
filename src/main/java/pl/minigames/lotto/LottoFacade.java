@@ -9,27 +9,27 @@ import java.util.Set;
 
 public class LottoFacade implements IGame {
     private final IInputReciver INPUT_RECIVER;
+    private final LottoMessagePrinter messagePrinter = new LottoMessagePrinter();
+    private final String PICK_START_OPTION_MESSAGE = "Type 1 to start game, Type 2 to check numbers by drawing number";
+    private final String START_GAME_MESSAGE = "Starting your lotto game";
+    private final String TYPE_NUMBERS_MESSAGE = "Starting your lotto game";
     public LottoFacade(IInputReciver inputReciver) {
         this.INPUT_RECIVER = inputReciver;
     }
 
     public Set<Integer> getNumbersFromUser() {
-        System.out.println("Starting your lotto game");
-        System.out.println("Type in number from 1-99");
+        messagePrinter.printLottoMessage(START_GAME_MESSAGE);
+        messagePrinter.printLottoMessage(TYPE_NUMBERS_MESSAGE);
         Set<Integer> array = new HashSet<>();
         try {
-            int typedNumbers = 0;
-            while (typedNumbers < 6) {
-                Scanner scanner = new Scanner(System.in);
+            while (array.size() < 6) {
                 int number = 0;
-                if (scanner.hasNextInt()) number = scanner.nextInt();
-                scanner.nextLine();
+                number = INPUT_RECIVER.getInt();
                 if (array.contains(number)) {
                     System.out.println("You've already typed that number");
                 }
                 if (numberCanBeAddedChecker(number) && !array.contains(number)) {
                     array.add(number);
-                    typedNumbers++;
                     System.out.println("Great!! I've added: " + number);
                 }
             }
@@ -47,9 +47,12 @@ public class LottoFacade implements IGame {
 
     @Override
     public void start() {
-        System.out.println("Type 1 to start game, Type 2 to check numbers by drawing number");
-        try (Scanner scanner = new Scanner(System.in)) {
-            String command = scanner.nextLine();
+        messagePrinter.printLottoMessage(PICK_START_OPTION_MESSAGE);
+        pickPlayOrCheckHistoricalNumbers();
+    }
+
+    private void pickPlayOrCheckHistoricalNumbers() {
+       String command = INPUT_RECIVER.getString();
             switch (command) {
                 case "1":
                     play();
@@ -58,13 +61,10 @@ public class LottoFacade implements IGame {
                     checkScore();
                     break;
             }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            System.out.println("End of start method throws exception");
-        }
+
     }
 
-    private void play() {
+    private String play() {
         Set<Integer> array = getNumbersFromUser();
         System.out.println("Generating random numbers");
         Set<Integer> drawnNumbers = getDrawnNumbers();
@@ -72,7 +72,8 @@ public class LottoFacade implements IGame {
         for (int i = 0; i < 5; i++) {
             System.out.println("checking if you won....");
         }
-        System.out.println(drawnNumbers.equals(array) ? "You won!!!" : "Sorry it's a loosing game;)");
+        System.out.println(drawnNumbers.containsAll(array) ? "You won!!!" : "Sorry it's a loosing game;)");
+        return drawnNumbers.containsAll(array) ? "You won!!!" : "Sorry it's a loosing game;)";
     }
 
     private void checkScore() {
@@ -89,7 +90,7 @@ public class LottoFacade implements IGame {
     }
 
     private Set<Integer> getDrawnNumbers() {
-        LottoNumberGenerator lottoNumberGenerator = new LottoNumberGenerator(); //
+        IWinningConditions lottoNumberGenerator = new LottoNumberGenerator(); //
         return lottoNumberGenerator.drawingNumbers();
     }
 

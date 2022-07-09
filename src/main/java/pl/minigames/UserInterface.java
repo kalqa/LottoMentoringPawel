@@ -5,10 +5,11 @@ public class UserInterface {
     private final GameChooser gameChooser;
 
     private final MessagePrinter messagePrinter = new MessagePrinter();
+    private final String FINISH_LOOP_CODE = "500";
 
     public UserInterface(IInputReciver inputReciver) {
-       this.INPUT_RECEIVER=inputReciver;
-       this.gameChooser=new GameChooser(inputReciver);
+        this.INPUT_RECEIVER = inputReciver;
+        this.gameChooser = new GameChooser(inputReciver);
     }
 
     public static void main(String[] args) {
@@ -16,29 +17,30 @@ public class UserInterface {
         UI.start();
     }
 
-    private void start() {
+    public String start() {
         boolean loop = true;
+        String typed = "";
         while (loop) {
             messagePrinter.welcomeMessege();
-            loop = pickMenuOptions(loop, INPUT_RECEIVER.getString());
+            typed = INPUT_RECEIVER.getString();
+            if (pickMenuOptions(typed).equals(FINISH_LOOP_CODE)) loop = false;
         }
         messagePrinter.endingMessage();
+        return pickMenuOptions(typed);
     }
 
-    private boolean pickMenuOptions(boolean loop, String command) {
+    private String pickMenuOptions(String command) {
         switch (command) {
             case "1":
                 gameChooser.InitializeChoosenGame();
-                loop = false;
-                break;
+                return FINISH_LOOP_CODE;
             case "2":
                 messagePrinter.printGames(gameChooser.getAvailableGames());
-                break;
+                return "";
             case "3":
-                loop = false;
-                break;
+                return FINISH_LOOP_CODE;
         }
-        return loop;
+        return "";
     }
 }
 
