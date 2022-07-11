@@ -3,7 +3,8 @@ package pl.minigames;
 import java.util.Scanner;
 
  class ScannerInputReciver implements IInputReciver{
-    private final Scanner scanner = new Scanner(System.in);
+     public static final String NOT_A_NUMBER_NUMBER_PLEASE = "Not a number!!, number please!!";
+     private Scanner scanner = new Scanner(System.in);
 
     private ScannerInputReciver() {
     }
@@ -13,15 +14,16 @@ import java.util.Scanner;
     @Override
     public String getString(){
         return scanner.nextLine().toUpperCase();
-    }
+   }
     @Override
     public Integer getInt(){
         int a = -1;
         try{
             if(scanner.hasNextInt()) a=scanner.nextInt();
+            scanner.nextLine();
         } catch (Exception e){
             System.out.println(e.getMessage());
-            System.out.println("Not a number!!, number please!!");
+            System.out.println(NOT_A_NUMBER_NUMBER_PLEASE);
         }
         return a;
     }

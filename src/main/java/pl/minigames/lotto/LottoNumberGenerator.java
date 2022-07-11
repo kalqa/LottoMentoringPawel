@@ -4,11 +4,17 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
-class LottoNumberGenerator implements IWinningConditions {
+class LottoNumberGenerator implements IWinningNumbersProvider {
     private final int NUMBERS_TO_DRAW = 6;
     private final int MAX_DRAWN_NUMBER_BOUND =100;
     private final int MIN_DRAWN_NUMBER_BOUND =0;
+    private LottoData lottoData = LottoData.getInstance();
     public LottoNumberGenerator() {
+    }
+
+    @Override
+    public void setResultForTestPurpose(Set<Integer> collect) {
+
     }
 
     public Set<Integer> drawingNumbers() {
@@ -18,12 +24,10 @@ class LottoNumberGenerator implements IWinningConditions {
             Integer number = random.nextInt(MAX_DRAWN_NUMBER_BOUND);
             if (number > MIN_DRAWN_NUMBER_BOUND && !drawnNumbers.contains(number)) drawnNumbers.add(number);
         }
-        //saveNumbers(drawnNumbers); /// move somewhere else
         return drawnNumbers;
     }
 
-    private void saveNumbers(Set<Integer> set) {
-        LottoData lottoData = LottoData.getInstance();
+    public void saveNumbers(Set<Integer> set) {
         lottoData.saveData(set);
     }
 

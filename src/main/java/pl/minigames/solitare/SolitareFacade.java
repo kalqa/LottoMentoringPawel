@@ -7,7 +7,8 @@ public class SolitareFacade implements IGame {
     }
 
     @Override
-    public void start() {
+    public String start() {
         System.out.println("Not ready yet");
+        return "not ready yet";
     }
 }

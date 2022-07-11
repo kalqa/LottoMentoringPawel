@@ -9,7 +9,7 @@ import java.util.Map;
 
 class GameChooser {
 
-    private final Map<String,IGame> availableGames = new HashMap<>();
+    private final Map<String, IGame> availableGames = new HashMap<>();
     private final IInputReciver INPUT_RECIVER;
     private final MessagePrinter MESSAGE_PRINTER = new MessagePrinter();
     private IGame iGame;
@@ -22,10 +22,11 @@ class GameChooser {
     }
 
     private void initialize() {
-        availableGames.put("LOTTO", new LottoFacade(INPUT_RECIVER)); // make import list via file?
+        availableGames.put("LOTTO", new LottoFacade(INPUT_RECIVER, true));
         availableGames.put("BATLLESHIPS", new BatlleShipsFacade());
         availableGames.put("SOLITARE", new SolitareFacade());
     }
+
     public void InitializeChoosenGame() {
         initializeGame(selectingGame());
     }
@@ -37,23 +38,18 @@ class GameChooser {
     private IGame selectingGame() {
         MESSAGE_PRINTER.print(CHOOSE_GAME_MESSAGE);
         boolean validGame = false;
+        String gameChosenByUser = "";
         while (!validGame) {
-            String gameChosenByUser = INPUT_RECIVER.getString();
+            gameChosenByUser = INPUT_RECIVER.getString();
             if (validateGame(gameChosenByUser)) {
-                return returnIGameClass(gameChosenByUser);
+                validGame = validateGame(gameChosenByUser);
             } else {
-                MESSAGE_PRINTER.print(NO_GAME_IN_BASE_MESSAGE);
-            }
+                MESSAGE_PRINTER.print(NO_GAME_IN_BASE_MESSAGE);}
         }
-        return null;
-    }
-
-    private IGame returnIGameClass(String gameChosenByUser) {
         return availableGames.get(gameChosenByUser);
     }
 
-
-    public Map<String,IGame> getAvailableGames() {
+    public Map<String, IGame> getAvailableGames() {
         return availableGames;
     }
 

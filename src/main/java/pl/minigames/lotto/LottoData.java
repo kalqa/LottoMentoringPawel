@@ -62,21 +62,13 @@ class LottoData {
         } catch (IOException e) {
             e.printStackTrace();
         }
-// Below method to manually print numbers in LottoData.LottoData - dev check purpose
-//    private void printNumbers(Set<Integer> set){
-//        StringBuilder stringBuilder = new StringBuilder("Numbers are: ");
-//        for(Integer i : set){
-//            stringBuilder.append(i);
-//            stringBuilder.append(";");
-//        }
-//        System.out.println(stringBuilder);
-//    }
     }
         public Set<Integer> getWithDrawalSet(Integer i){
-        try{return (i>-1&&i<numbersDrawn.size()) ? numbersDrawn.get(i): new HashSet<>();
-        }catch (Exception e){
+        try {
+            return numbersDrawn.containsKey(i) ? numbersDrawn.get(i): new HashSet<>();
+        } catch (Exception e){
             e.getMessage();
         }
-        return null; //zrobić coś żeby nie zwracało null
+        return new HashSet<>();
     }
 }

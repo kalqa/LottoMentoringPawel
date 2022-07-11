@@ -17,7 +17,7 @@ public class UserInterface {
         UI.start();
     }
 
-    public String start() {
+    public void start() {
         boolean loop = true;
         String typed = "";
         while (loop) {
@@ -26,7 +26,6 @@ public class UserInterface {
             if (pickMenuOptions(typed).equals(FINISH_LOOP_CODE)) loop = false;
         }
         messagePrinter.endingMessage();
-        return pickMenuOptions(typed);
     }
 
     private String pickMenuOptions(String command) {
