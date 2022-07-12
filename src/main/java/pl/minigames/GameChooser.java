@@ -28,7 +28,6 @@ class GameChooser {
     }
 
 
-
     public IGame selectingGame() {
         MESSAGE_PRINTER.print(CHOOSE_GAME_MESSAGE);
         boolean validGame = false;
@@ -38,7 +37,8 @@ class GameChooser {
             if (validateGame(gameChosenByUser)) {
                 validGame = validateGame(gameChosenByUser);
             } else {
-                MESSAGE_PRINTER.print(NO_GAME_IN_BASE_MESSAGE);}
+                MESSAGE_PRINTER.print(NO_GAME_IN_BASE_MESSAGE);
+            }
         }
         return availableGames.get(gameChosenByUser);
     }

@@ -4,9 +4,9 @@ class TestInputReciver implements IInputReciver {
     private String s;
     private Integer i;
     private String[] StringsToType;
-    private int indexStringToType=0;
+    private int indexStringToType = 0;
     private int[] intsToType;
-    private int indexIntsToType=0;
+    private int indexIntsToType = 0;
 
 
     public Integer getInt(Integer integer) {

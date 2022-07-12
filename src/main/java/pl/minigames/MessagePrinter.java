@@ -12,8 +12,8 @@ class MessagePrinter {
 
 
     public MessagePrinter(IInputReciver inputReciver) {
-        this.inputReciver=inputReciver;
-        this.gameChooser=new GameChooser(inputReciver);
+        this.inputReciver = inputReciver;
+        this.gameChooser = new GameChooser(inputReciver);
     }
 
     void endingMessage() {
@@ -25,13 +25,15 @@ class MessagePrinter {
         print(WELCOME_MESSAGE_TYPE_2);
         print(WELCOME_MESSAGE_TYPE_3);
     }
+
     void printGames() {
-        Map<String,IGame> availableGames = gameChooser.getAvailableGames();
+        Map<String, IGame> availableGames = gameChooser.getAvailableGames();
         for (String s : availableGames.keySet()) {
             print("We have a " + s + " game in database right now");
         }
     }
-    void print(String s){
+
+    void print(String s) {
         System.out.println(s);
     }
 }

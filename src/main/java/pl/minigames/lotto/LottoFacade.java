@@ -19,7 +19,7 @@ public class LottoFacade implements IGame {
     public LottoFacade(IInputReciver inputReciver, boolean isNoTaTest) {
         this.INPUT_RECIVER = inputReciver;
         this.iWinningNumbersProvider = isNoTaTest == true ? new LottoNumberGenerator() : new ManualLottoNumbersTest();
-        this.gameModel = new GameModel(inputReciver,iWinningNumbersProvider);
+        this.gameModel = new GameModel(inputReciver, iWinningNumbersProvider);
         this.scoreChecker = new ScoreChecker(inputReciver);
     }
 
@@ -34,6 +34,7 @@ public class LottoFacade implements IGame {
         }
         return ERROR_IN_START_MESSAGE;
     }
+
     public IWinningNumbersProvider getiWinningNumbersProvider() {
         return iWinningNumbersProvider;
     }

@@ -12,6 +12,7 @@ class ScoreChecker {
     public ScoreChecker(IInputReciver inputReciver) {
         this.inputReciver = inputReciver;
     }
+
     public String checkScore() {
         messagePrinter.printLottoMessage(TYPE_WITHDRAW_NUMBER);
         Set<Integer> retrivedSet = DataLoader.getInstance().getWithDrawalSet(inputReciver.getInt());

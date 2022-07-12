@@ -6,5 +6,6 @@ public interface IWinningNumbersProvider {
     Set<Integer> drawingNumbers();
 
     void setResultForTestPurpose(Set<Integer> collect);
+
     void saveNumbers(Set<Integer> set);
 }

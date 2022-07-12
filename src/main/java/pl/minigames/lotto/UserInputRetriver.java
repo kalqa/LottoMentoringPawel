@@ -16,6 +16,7 @@ class UserInputRetriver {
     public UserInputRetriver(IInputReciver inputReciver) {
         this.inputReciver = inputReciver;
     }
+
     public Set<Integer> getNumbersFromUser() {
         messagePrinter.printTypeNumbersMessage();
         try {
@@ -35,6 +36,7 @@ class UserInputRetriver {
         }
         return numbersFromUser;
     }
+
     boolean checkIfNumberCanBeAdded(int number) {
         if (number <= MAX_NUMBER_BOUND && number >= MIN_NUMBER_BOUND) return true;
         messagePrinter.printWrongNumberTyped();

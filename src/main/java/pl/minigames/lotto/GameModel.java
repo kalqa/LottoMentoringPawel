@@ -5,7 +5,7 @@ import pl.minigames.IInputReciver;
 import java.util.HashSet;
 import java.util.Set;
 
-public class GameModel {
+class GameModel {
     private final IInputReciver INPUT_RECIVER;
     private final IWinningNumbersProvider iWinningNumbersProvider;
     private final LottoMessagePrinter messagePrinter = new LottoMessagePrinter();
@@ -36,6 +36,7 @@ public class GameModel {
         iWinningNumbersProvider.saveNumbers(drawnNumbers);
         return getWinOrLooseMessage();
     }
+
     private String getWinOrLooseMessage() {
         return drawnNumbers.containsAll(numbersFromUser) ? WIN_MESSAGE : LOOSE_MESSAGE;
     }

@@ -31,11 +31,7 @@ class DataLoader {
                 int index = scanner.nextInt();
                 scanner.skip(scanner.delimiter());
                 String values = scanner.nextLine();
-                Set<Integer> set = Stream.of(values.split(";"))
-                        .collect(Collectors.toSet())
-                        .stream()
-                        .map(i -> Integer.parseInt(i))
-                        .collect(Collectors.toSet());
+                Set<Integer> set = Stream.of(values.split(";")).collect(Collectors.toSet()).stream().map(i -> Integer.parseInt(i)).collect(Collectors.toSet());
                 numbersDrawn.put(index, set);
             }
 
