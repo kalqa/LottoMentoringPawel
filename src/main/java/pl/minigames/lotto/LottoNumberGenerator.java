@@ -8,7 +8,8 @@ class LottoNumberGenerator implements IWinningNumbersProvider {
     private final int NUMBERS_TO_DRAW = 6;
     private final int MAX_DRAWN_NUMBER_BOUND =100;
     private final int MIN_DRAWN_NUMBER_BOUND =0;
-    private LottoData lottoData = LottoData.getInstance();
+    private DataLoader dataLoader = DataLoader.getInstance();
+    private DataSaver dataSaver = DataSaver.getInstance();
     public LottoNumberGenerator() {
     }
 
@@ -28,7 +29,7 @@ class LottoNumberGenerator implements IWinningNumbersProvider {
     }
 
     public void saveNumbers(Set<Integer> set) {
-        lottoData.saveData(set);
+        dataSaver.saveData(set);
     }
 
 }

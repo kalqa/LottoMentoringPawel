@@ -2,14 +2,14 @@ package pl.minigames;
 
 public class UserInterface {
     private final IInputReciver INPUT_RECEIVER;
-    private final GameChooser gameChooser;
-
-    private final MessagePrinter messagePrinter = new MessagePrinter();
+    private final GameInicializer gameInicializer;
+    private final MessagePrinter messagePrinter;
     private final String FINISH_LOOP_CODE = "500";
 
     public UserInterface(IInputReciver inputReciver) {
         this.INPUT_RECEIVER = inputReciver;
-        this.gameChooser = new GameChooser(inputReciver);
+        this.gameInicializer = new GameInicializer(inputReciver);
+        this.messagePrinter = new MessagePrinter(inputReciver);
     }
 
     public static void main(String[] args) {
@@ -31,10 +31,10 @@ public class UserInterface {
     private String pickMenuOptions(String command) {
         switch (command) {
             case "1":
-                gameChooser.InitializeChoosenGame();
+                gameInicializer.InitializeGame();
                 return FINISH_LOOP_CODE;
             case "2":
-                messagePrinter.printGames(gameChooser.getAvailableGames());
+                messagePrinter.printGames();
                 return "";
             case "3":
                 return FINISH_LOOP_CODE;

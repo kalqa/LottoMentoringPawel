@@ -11,13 +11,13 @@ class GameChooser {
 
     private final Map<String, IGame> availableGames = new HashMap<>();
     private final IInputReciver INPUT_RECIVER;
-    private final MessagePrinter MESSAGE_PRINTER = new MessagePrinter();
-    private IGame iGame;
+    private final MessagePrinter MESSAGE_PRINTER;
     private final String CHOOSE_GAME_MESSAGE = "Please choose a game";
     private final String NO_GAME_IN_BASE_MESSAGE = "Sorry no such game in base";
 
     public GameChooser(IInputReciver inputReceiver) {
         this.INPUT_RECIVER = inputReceiver;
+        this.MESSAGE_PRINTER = new MessagePrinter(inputReceiver);
         initialize();
     }
 
@@ -27,15 +27,9 @@ class GameChooser {
         availableGames.put("SOLITARE", new SolitareFacade());
     }
 
-    public void InitializeChoosenGame() {
-        initializeGame(selectingGame());
-    }
 
-    private void initializeGame(IGame game) {
-        game.start();
-    }
 
-    private IGame selectingGame() {
+    public IGame selectingGame() {
         MESSAGE_PRINTER.print(CHOOSE_GAME_MESSAGE);
         boolean validGame = false;
         String gameChosenByUser = "";
