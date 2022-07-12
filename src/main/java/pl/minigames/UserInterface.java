@@ -9,7 +9,7 @@ public class UserInterface {
     public UserInterface(IInputReciver inputReciver) {
         this.INPUT_RECEIVER = inputReciver;
         this.gameInicializer = new GameInicializer(inputReciver);
-        this.messagePrinter = new MessagePrinter(inputReciver);
+        this.messagePrinter = new MessagePrinter();
     }
 
     public static void main(String[] args) {
@@ -34,7 +34,7 @@ public class UserInterface {
                 gameInicializer.InitializeGame();
                 return FINISH_LOOP_CODE;
             case "2":
-                messagePrinter.printGames();
+                messagePrinter.printGames(new GameChooser(INPUT_RECEIVER).getAvailableGames());
                 return "";
             case "3":
                 return FINISH_LOOP_CODE;

@@ -14,6 +14,7 @@ class DataSaver {
     }
 
     private DataSaver() {
+        numbersDrawn = DataLoader.getInstance().getNumbersDrawn();
     }
 
     public void saveData(Set<Integer> set) {

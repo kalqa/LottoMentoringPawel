@@ -17,7 +17,7 @@ class GameChooser {
 
     public GameChooser(IInputReciver inputReceiver) {
         this.INPUT_RECIVER = inputReceiver;
-        this.MESSAGE_PRINTER = new MessagePrinter(inputReceiver);
+        this.MESSAGE_PRINTER = new MessagePrinter();
         initialize();
     }
 

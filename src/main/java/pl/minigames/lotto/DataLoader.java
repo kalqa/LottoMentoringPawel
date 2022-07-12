@@ -48,4 +48,8 @@ class DataLoader {
         }
         return new HashSet<>();
     }
+
+    public Map<Integer, Set<Integer>> getNumbersDrawn() {
+        return numbersDrawn;
+    }
 }
