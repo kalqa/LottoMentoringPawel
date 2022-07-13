@@ -1,8 +1,8 @@
 package pl.minigames.lotto;
 
-import pl.minigames.IInputReciver;
+import pl.minigames.InputReceivable;
 
-class TestInputReciver implements IInputReciver {
+public class TestInputReciver implements InputReceivable {
     private String s;
     private Integer i;
     private String[] StringsToType;
@@ -21,13 +21,13 @@ class TestInputReciver implements IInputReciver {
     }
 
     @Override
-    public Integer getInt() {
+    public Integer receiveNumberFromUser() {
         return intsToType[indexIntsToType++];
     }
 
 
     @Override
-    public String getString() {
+    public String receiveSignFromUser() {
         String toReturn = StringsToType[indexStringToType];
         indexStringToType = indexStringToType++;
         return toReturn;

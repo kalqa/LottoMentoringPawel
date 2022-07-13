@@ -16,7 +16,7 @@ class MessagePrinter {
         print(END_OF_PROGRAM);
     }
 
-    void welcomeMessege() {
+    void welcomeMessage() {
         print(WELCOME_MESSAGE_TYPE_1);
         print(WELCOME_MESSAGE_TYPE_2);
         print(WELCOME_MESSAGE_TYPE_3);

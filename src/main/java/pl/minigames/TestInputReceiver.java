@@ -1,6 +1,6 @@
 package pl.minigames;
 
-class TestInputReciver implements IInputReciver {
+class TestInputReceiver implements InputReceivable {
     private String s;
     private Integer i;
     private String[] StringsToType;
@@ -14,18 +14,18 @@ class TestInputReciver implements IInputReciver {
     }
 
     @Override
-    public Integer getInt() {
+    public Integer receiveNumberFromUser() {
         return intsToType[indexIntsToType++];
     }
 
-    public TestInputReciver(String[] commands, int[] lottoNumbersToType) {
+    public TestInputReceiver(String[] commands, int[] lottoNumbersToType) {
         this.intsToType = lottoNumbersToType;
         this.StringsToType = commands;
 
     }
 
     @Override
-    public String getString() {
+    public String receiveSignFromUser() {
         String toReturn = StringsToType[indexStringToType];
         indexStringToType = indexStringToType++;
         return toReturn;

@@ -1,21 +1,21 @@
 package pl.minigames.lotto;
 
-import pl.minigames.IInputReciver;
+import pl.minigames.InputReceivable;
 
 import java.util.Set;
 
 class ScoreChecker {
-    IInputReciver inputReciver;
+    InputReceivable inputReciver;
     LottoMessagePrinter messagePrinter = new LottoMessagePrinter();
     public static final String TYPE_WITHDRAW_NUMBER = "Type withdraw number";
 
-    public ScoreChecker(IInputReciver inputReciver) {
+    public ScoreChecker(InputReceivable inputReciver) {
         this.inputReciver = inputReciver;
     }
 
     public String checkScore() {
         messagePrinter.printLottoMessage(TYPE_WITHDRAW_NUMBER);
-        Set<Integer> retrivedSet = DataLoader.getInstance().getWithDrawalSet(inputReciver.getInt());
+        Set<Integer> retrivedSet = DataLoader.getInstance().getWithDrawalSet(inputReciver.receiveNumberFromUser());
         if (retrivedSet.size() > 0) messagePrinter.printNumbers(retrivedSet);
         return retrivedSet.toString();
     }
