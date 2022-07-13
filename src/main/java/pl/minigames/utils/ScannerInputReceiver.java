@@ -1,17 +1,15 @@
-package pl.minigames;
+package pl.minigames.utils;
+
+import pl.minigames.InputReceivable;
 
 import java.util.Scanner;
 
-class ScannerInputReceiver implements InputReceivable {
+public class ScannerInputReceiver implements InputReceivable {
     public static final String NOT_A_NUMBER_NUMBER_PLEASE = "Not a number!!, number please!!";
     private final Scanner scanner = new Scanner(System.in);
 
     public ScannerInputReceiver() {
     }
-
-//    public static ScannerInputReceiver getInstance() {
-//        return new ScannerInputReceiver();
-//    }
 
     @Override
     public String receiveSignFromUser() {

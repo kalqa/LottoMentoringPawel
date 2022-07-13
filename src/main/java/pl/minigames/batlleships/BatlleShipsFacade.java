@@ -1,8 +1,8 @@
 package pl.minigames.batlleships;
 
-import pl.minigames.IGame;
+import pl.minigames.Playable;
 
-public class BatlleShipsFacade implements IGame {
+public class BatlleShipsFacade implements Playable {
     public BatlleShipsFacade() {
     }
 

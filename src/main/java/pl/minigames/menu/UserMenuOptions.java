@@ -1,4 +1,4 @@
-package pl.minigames;
+package pl.minigames.menu;
 
 public enum UserMenuOptions {
 
@@ -22,5 +22,9 @@ public enum UserMenuOptions {
 
     public boolean isExit() {
         return EXIT.option.equals(this.option);
+    }
+
+    public boolean isInitialize() {
+        return INITIALIZE_GAME.option.equals(this.option);
     }
 }

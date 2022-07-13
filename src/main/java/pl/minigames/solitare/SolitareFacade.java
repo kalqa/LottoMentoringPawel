@@ -1,8 +1,8 @@
 package pl.minigames.solitare;
 
-import pl.minigames.IGame;
+import pl.minigames.Playable;
 
-public class SolitareFacade implements IGame {
+public class SolitareFacade implements Playable {
     public SolitareFacade() {
     }
 

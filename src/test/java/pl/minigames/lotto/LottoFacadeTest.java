@@ -1,8 +1,7 @@
 package pl.minigames.lotto;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import pl.minigames.InputReceivable;
+import pl.minigames.TestInputReciver;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -10,45 +9,70 @@ import java.util.stream.Collectors;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class LottoFacadeTest {
-    String[] array = new String[2];
-    int[] ints = new int[6];
+
 
     LottoFacade lottoFacade;
-    @BeforeEach
-    void setUp(){
-        InputReceivable inputReciver = new TestInputReciver(array,ints);
-        lottoFacade = new LottoFacade(inputReciver,false);
-        String x ="[50, 9, 59, 27, 28, 63]";
+
+
+    @Test
+    void when_sets_are_equal_should_return_win_message() {
+        //Given
+        String[] array = new String[]{"1", "1"};
+        int[] ints = new int[]{1, 3, 2, 7, 5, 6};
+        LottoFacade facade = new LottoFacade(new TestInputReciver(array, ints), true);
+        facade.getWinningNumbersProvider().setResultForTestPurpose(Arrays.stream(ints)
+                .boxed()
+                .sorted()
+                .collect(Collectors.toSet()));
+        //when
+        String result = facade.start();
+
+        //then
+        assertEquals("You won!!!", result);
     }
 
     @Test
-    void startGameTest() {
-       array[0] ="1";
-       array[1] ="1";
-       ints[0]=1;
-        ints[1]=2;
-        ints[2]=3;
-        ints[3]=4;
-        ints[4]=5;
-        ints[5]=6;
-        lottoFacade.getiWinningNumbersProvider().setResultForTestPurpose(Arrays.stream(ints).boxed().collect(Collectors.toSet()));
-       String result = lottoFacade.start();
-       assertEquals("You won!!!",result);
+    void when_sets_are_unequal_should_return_loose_message() {
+        //Given
+        String[] array = new String[]{"1", "1"};
+        int[] ints = new int[]{1, 3, 2, 7, 5, 6};
+        LottoFacade facade = new LottoFacade(new TestInputReciver(array, ints), true);
+        facade.getWinningNumbersProvider().setResultForTestPurpose(Arrays.stream(new int[]{7, 8, 9, 10, 11, 12})
+                .boxed()
+                .sorted()
+                .collect(Collectors.toSet()));
+        //when
+        String result = facade.start();
+
+        //then
+        assertEquals("Sorry, it's a loosing game;)", result);
     }
+
     @Test
-    void startChooseScoreTest() {
-        array[0] ="2";
-        array[1] ="0";
-        ints[0]=1;
-        String result = lottoFacade.start();
-        assertEquals("[99, 35, 38, 55, 9, 44]",result);
+    void should_return_numbers_from_base_with_given_index() {
+        //Given
+        String[] array = new String[]{"2", "0"};
+        int[] ints = new int[]{1, 3, 2, 7, 5, 6};
+        LottoFacade facade = new LottoFacade(new TestInputReciver(array, ints), true);
+
+        //when
+        String result = facade.start();
+
+        //then
+        assertEquals("[99, 35, 38, 55, 9, 44]", result);
     }
+
     @Test
-    void chooseScoreTestOutOfBounds() {
-        array[0] ="2";
-        array[1] ="77";
-        ints[0]=77;
-        String result = lottoFacade.start();
-        assertEquals("[]",result);
+    void should_return_empty_set_when_index_out_of_bounds() {
+        //Given
+        String[] array = new String[]{"2", "0"};
+        int[] ints = new int[]{77, 3, 2, 7, 5, 6};
+        LottoFacade facade = new LottoFacade(new TestInputReciver(array, ints), true);
+
+        //when
+        String result = facade.start();
+
+        //then
+        assertEquals("[]", result);
     }
 }

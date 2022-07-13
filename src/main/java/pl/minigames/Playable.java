@@ -1,5 +1,6 @@
 package pl.minigames;
 
-public interface IGame {
+public interface Playable {
     String start();
+
 }

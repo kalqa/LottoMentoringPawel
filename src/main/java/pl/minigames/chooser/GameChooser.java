@@ -1,8 +1,7 @@
 package pl.minigames.chooser;
 
-import pl.minigames.IGame;
 import pl.minigames.InputReceivable;
-import pl.minigames.MessagePrinter;
+import pl.minigames.Playable;
 import pl.minigames.batlleships.BatlleShipsFacade;
 import pl.minigames.lotto.LottoFacade;
 import pl.minigames.solitare.SolitareFacade;
@@ -10,47 +9,46 @@ import pl.minigames.solitare.SolitareFacade;
 import java.util.HashMap;
 import java.util.Map;
 
-class GameChooser {
+public class GameChooser {
 
-    private final Map<String, IGame> availableGames = new HashMap<>();
-    private final InputReceivable INPUT_RECIVER;
-    private final MessagePrinter MESSAGE_PRINTER;
-    private final String CHOOSE_GAME_MESSAGE = "Please choose a game";
-    private final String NO_GAME_IN_BASE_MESSAGE = "Sorry no such game in base";
+    private final Map<String, Playable> availableGames = new HashMap<>();
+    private final InputReceivable inputReciver;
+    private final MessagePrinter printer;
+    private final boolean testMode;
 
-    public GameChooser(InputReceivable inputReceiver) {
-        this.INPUT_RECIVER = inputReceiver;
-        this.MESSAGE_PRINTER = new MessagePrinter();
-        initialize();
-    }
 
-    private void initialize() {
-        availableGames.put("LOTTO", new LottoFacade(INPUT_RECIVER, true));
+    public GameChooser(InputReceivable inputReceiver, boolean testMode) {
+        this.inputReciver = inputReceiver;
+        this.testMode = testMode;
+        this.printer = new MessagePrinter();
+        availableGames.put("LOTTO", new LottoFacade(inputReciver, false));
         availableGames.put("BATLLESHIPS", new BatlleShipsFacade());
         availableGames.put("SOLITARE", new SolitareFacade());
+        if (testMode) {
+            availableGames.put("LOTTO", new LottoFacade(inputReciver, true));
+        }
     }
 
 
-    public IGame selectingGame() {
-        MESSAGE_PRINTER.print(CHOOSE_GAME_MESSAGE);
-        boolean validGame = false;
+    public Playable selectingGame() {
+        printer.printChooseGame();
         String gameChosenByUser = "";
-        while (!validGame) {
-            gameChosenByUser = INPUT_RECIVER.receiveSignFromUser();
-            if (validateGame(gameChosenByUser)) {
-                validGame = validateGame(gameChosenByUser);
-            } else {
-                MESSAGE_PRINTER.print(NO_GAME_IN_BASE_MESSAGE);
+        while (!validateGame(gameChosenByUser)) {
+            gameChosenByUser = inputReciver.receiveSignFromUser();
+            if (!validateGame(gameChosenByUser)) {
+                printer.printNoGameInBase();
             }
         }
         return availableGames.get(gameChosenByUser);
     }
 
-    public Map<String, IGame> getAvailableGames() {
-        return availableGames;
-    }
-
     private boolean validateGame(String s) {
         return availableGames.containsKey(s) ? true : false;
     }
+
+    public Map<String, Playable> getAvailableGames() {
+        return availableGames;
+    }
+
+
 }

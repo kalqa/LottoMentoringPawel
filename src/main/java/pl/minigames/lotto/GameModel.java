@@ -7,7 +7,7 @@ import java.util.Set;
 
 class GameModel {
     private final InputReceivable INPUT_RECIVER;
-    private final IWinningNumbersProvider iWinningNumbersProvider;
+    private final WinningNumbersProvider winningNumbersProvider;
     private final LottoMessagePrinter messagePrinter = new LottoMessagePrinter();
     private final UserInputRetriver userInputRetriver;
 
@@ -19,9 +19,9 @@ class GameModel {
     private Set<Integer> numbersFromUser = new HashSet<>();
     private Set<Integer> drawnNumbers;
 
-    public GameModel(InputReceivable INPUT_RECIVER, IWinningNumbersProvider iWinningNumbersProvider) {
+    public GameModel(InputReceivable INPUT_RECIVER, WinningNumbersProvider winningNumbersProvider) {
         this.INPUT_RECIVER = INPUT_RECIVER;
-        this.iWinningNumbersProvider = iWinningNumbersProvider;
+        this.winningNumbersProvider = winningNumbersProvider;
         this.userInputRetriver = new UserInputRetriver(INPUT_RECIVER);
     }
 
@@ -33,7 +33,7 @@ class GameModel {
         messagePrinter.printNumbers(drawnNumbers);
         messagePrinter.printWaitingMessage();
         messagePrinter.printLottoMessage(getWinOrLooseMessage());
-        iWinningNumbersProvider.saveNumbers(drawnNumbers);
+        winningNumbersProvider.saveNumbers(drawnNumbers);
         return getWinOrLooseMessage();
     }
 
@@ -42,6 +42,6 @@ class GameModel {
     }
 
     private void generateWinningNumbers() {
-        drawnNumbers = iWinningNumbersProvider.drawingNumbers();
+        drawnNumbers = winningNumbersProvider.drawingNumbers();
     }
 }

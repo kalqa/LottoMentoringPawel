@@ -1,12 +1,14 @@
 package pl.minigames.lotto;
 
-import pl.minigames.IGame;
+import pl.minigames.Playable;
 import pl.minigames.InputReceivable;
 
-public class LottoFacade implements IGame {
+import java.util.Set;
+
+public class LottoFacade implements Playable {
 
     private final InputReceivable INPUT_RECIVER;
-    private final IWinningNumbersProvider iWinningNumbersProvider;
+    private final WinningNumbersProvider winningNumbersProvider;
     private final LottoMessagePrinter messagePrinter = new LottoMessagePrinter();
     private final GameModel gameModel;
     private final ScoreChecker scoreChecker;
@@ -16,10 +18,28 @@ public class LottoFacade implements IGame {
     private final String ERROR_IN_START_MESSAGE = "Well, there is an error in start..";
 
 
-    public LottoFacade(InputReceivable inputReciver, boolean isNoTaTest) {
+    public LottoFacade(InputReceivable inputReciver, boolean overrideMethodsForTestPurposes) {
         this.INPUT_RECIVER = inputReciver;
-        this.iWinningNumbersProvider = isNoTaTest == true ? new LottoNumberGenerator() : new ManualLottoNumbersTest();
-        this.gameModel = new GameModel(inputReciver, iWinningNumbersProvider);
+        this.winningNumbersProvider = overrideMethodsForTestPurposes ? new WinningNumbersProvider() {
+
+
+            @Override
+            public Set<Integer> drawingNumbers() {
+                return drawnNumbers;
+            }
+
+            @Override
+            public void setResultForTestPurpose(Set<Integer> collect) {
+                for (Integer i : collect)
+                    drawnNumbers.add(i);
+            }
+
+            @Override
+            public void saveNumbers(Set<Integer> set) {
+
+            }
+        } : new LottoNumberGenerator();
+        this.gameModel = new GameModel(inputReciver, winningNumbersProvider);
         this.scoreChecker = new ScoreChecker(inputReciver);
     }
 
@@ -35,7 +55,7 @@ public class LottoFacade implements IGame {
         return ERROR_IN_START_MESSAGE;
     }
 
-    public IWinningNumbersProvider getiWinningNumbersProvider() {
-        return iWinningNumbersProvider;
+    public WinningNumbersProvider getWinningNumbersProvider() {
+        return winningNumbersProvider;
     }
 }
