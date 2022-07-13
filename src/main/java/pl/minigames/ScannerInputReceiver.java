@@ -2,24 +2,24 @@ package pl.minigames;
 
 import java.util.Scanner;
 
-class ScannerInputReciver implements IInputReciver {
+class ScannerInputReceiver implements InputReceivable {
     public static final String NOT_A_NUMBER_NUMBER_PLEASE = "Not a number!!, number please!!";
-    private Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner = new Scanner(System.in);
 
-    private ScannerInputReciver() {
+    public ScannerInputReceiver() {
     }
 
-    public static ScannerInputReciver getInstance() {
-        return new ScannerInputReciver();
-    }
+//    public static ScannerInputReceiver getInstance() {
+//        return new ScannerInputReceiver();
+//    }
 
     @Override
-    public String getString() {
+    public String receiveSignFromUser() {
         return scanner.nextLine().toUpperCase();
     }
 
     @Override
-    public Integer getInt() {
+    public Integer receiveNumberFromUser() {
         int a = -1;
         try {
             if (scanner.hasNextInt()) a = scanner.nextInt();

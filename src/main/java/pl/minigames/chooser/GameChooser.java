@@ -1,5 +1,8 @@
-package pl.minigames;
+package pl.minigames.chooser;
 
+import pl.minigames.IGame;
+import pl.minigames.InputReceivable;
+import pl.minigames.MessagePrinter;
 import pl.minigames.batlleships.BatlleShipsFacade;
 import pl.minigames.lotto.LottoFacade;
 import pl.minigames.solitare.SolitareFacade;
@@ -10,12 +13,12 @@ import java.util.Map;
 class GameChooser {
 
     private final Map<String, IGame> availableGames = new HashMap<>();
-    private final IInputReciver INPUT_RECIVER;
+    private final InputReceivable INPUT_RECIVER;
     private final MessagePrinter MESSAGE_PRINTER;
     private final String CHOOSE_GAME_MESSAGE = "Please choose a game";
     private final String NO_GAME_IN_BASE_MESSAGE = "Sorry no such game in base";
 
-    public GameChooser(IInputReciver inputReceiver) {
+    public GameChooser(InputReceivable inputReceiver) {
         this.INPUT_RECIVER = inputReceiver;
         this.MESSAGE_PRINTER = new MessagePrinter();
         initialize();
@@ -33,7 +36,7 @@ class GameChooser {
         boolean validGame = false;
         String gameChosenByUser = "";
         while (!validGame) {
-            gameChosenByUser = INPUT_RECIVER.getString();
+            gameChosenByUser = INPUT_RECIVER.receiveSignFromUser();
             if (validateGame(gameChosenByUser)) {
                 validGame = validateGame(gameChosenByUser);
             } else {

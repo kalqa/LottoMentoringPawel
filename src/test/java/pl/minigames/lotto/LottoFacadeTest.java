@@ -2,7 +2,7 @@ package pl.minigames.lotto;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import pl.minigames.IInputReciver;
+import pl.minigames.InputReceivable;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -16,7 +16,7 @@ class LottoFacadeTest {
     LottoFacade lottoFacade;
     @BeforeEach
     void setUp(){
-        IInputReciver inputReciver = new TestInputReciver(array,ints);
+        InputReceivable inputReciver = new TestInputReciver(array,ints);
         lottoFacade = new LottoFacade(inputReciver,false);
         String x ="[50, 9, 59, 27, 28, 63]";
     }

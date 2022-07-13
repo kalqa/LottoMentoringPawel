@@ -1,11 +1,11 @@
 package pl.minigames.lotto;
 
 import pl.minigames.IGame;
-import pl.minigames.IInputReciver;
+import pl.minigames.InputReceivable;
 
 public class LottoFacade implements IGame {
 
-    private final IInputReciver INPUT_RECIVER;
+    private final InputReceivable INPUT_RECIVER;
     private final IWinningNumbersProvider iWinningNumbersProvider;
     private final LottoMessagePrinter messagePrinter = new LottoMessagePrinter();
     private final GameModel gameModel;
@@ -16,7 +16,7 @@ public class LottoFacade implements IGame {
     private final String ERROR_IN_START_MESSAGE = "Well, there is an error in start..";
 
 
-    public LottoFacade(IInputReciver inputReciver, boolean isNoTaTest) {
+    public LottoFacade(InputReceivable inputReciver, boolean isNoTaTest) {
         this.INPUT_RECIVER = inputReciver;
         this.iWinningNumbersProvider = isNoTaTest == true ? new LottoNumberGenerator() : new ManualLottoNumbersTest();
         this.gameModel = new GameModel(inputReciver, iWinningNumbersProvider);
@@ -28,7 +28,7 @@ public class LottoFacade implements IGame {
         messagePrinter.printLottoMessage(PICK_START_OPTION_MESSAGE);
         String optionPicked = "";
         while (!optionPicked.equals(PLAY_OPTION_STRING) || !optionPicked.equals(CHECKSCORE_OPTION_STRING)) {
-            optionPicked = INPUT_RECIVER.getString();
+            optionPicked = INPUT_RECIVER.receiveSignFromUser();
             if (optionPicked.equals(PLAY_OPTION_STRING)) return gameModel.play();
             if (optionPicked.equals(CHECKSCORE_OPTION_STRING)) return scoreChecker.checkScore();
         }

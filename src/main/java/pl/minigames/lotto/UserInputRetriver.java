@@ -1,19 +1,19 @@
 package pl.minigames.lotto;
 
-import pl.minigames.IInputReciver;
+import pl.minigames.InputReceivable;
 
 import java.util.HashSet;
 import java.util.Set;
 
 class UserInputRetriver {
-    IInputReciver inputReciver;
+    InputReceivable inputReciver;
     LottoMessagePrinter messagePrinter = new LottoMessagePrinter();
     private final String ADDING_TO_SET_MESSAGE = "Great!! I've added: ";
     public static final int MAX_NUMBER_BOUND = 99;
     public static final int MIN_NUMBER_BOUND = 1;
     private Set<Integer> numbersFromUser = new HashSet<>();
 
-    public UserInputRetriver(IInputReciver inputReciver) {
+    public UserInputRetriver(InputReceivable inputReciver) {
         this.inputReciver = inputReciver;
     }
 
@@ -22,7 +22,7 @@ class UserInputRetriver {
         try {
             while (numbersFromUser.size() < 6) {
                 int number = 0;
-                number = inputReciver.getInt();
+                number = inputReciver.receiveNumberFromUser();
                 if (numbersFromUser.contains(number)) {
                     messagePrinter.printWrongNumberTyped();
                 }

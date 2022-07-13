@@ -1,12 +1,12 @@
 package pl.minigames.lotto;
 
-import pl.minigames.IInputReciver;
+import pl.minigames.InputReceivable;
 
 import java.util.HashSet;
 import java.util.Set;
 
 class GameModel {
-    private final IInputReciver INPUT_RECIVER;
+    private final InputReceivable INPUT_RECIVER;
     private final IWinningNumbersProvider iWinningNumbersProvider;
     private final LottoMessagePrinter messagePrinter = new LottoMessagePrinter();
     private final UserInputRetriver userInputRetriver;
@@ -19,7 +19,7 @@ class GameModel {
     private Set<Integer> numbersFromUser = new HashSet<>();
     private Set<Integer> drawnNumbers;
 
-    public GameModel(IInputReciver INPUT_RECIVER, IWinningNumbersProvider iWinningNumbersProvider) {
+    public GameModel(InputReceivable INPUT_RECIVER, IWinningNumbersProvider iWinningNumbersProvider) {
         this.INPUT_RECIVER = INPUT_RECIVER;
         this.iWinningNumbersProvider = iWinningNumbersProvider;
         this.userInputRetriver = new UserInputRetriver(INPUT_RECIVER);

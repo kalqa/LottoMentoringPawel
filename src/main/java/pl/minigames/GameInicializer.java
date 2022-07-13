@@ -1,20 +1,22 @@
 package pl.minigames;
 
-class GameInicializer {
-    private IInputReciver inputReciver;
-    private final GameChooser gameChooser;
+import pl.minigames.chooser.GameChooser;
 
-    public GameInicializer(IInputReciver inputReciver) {
+class GameInicializer {
+
+    private InputReceivable inputReciver;
+
+    public GameInicializer(InputReceivable inputReciver, UserMenuOptions selectedOptionFromUser) {
         this.inputReciver = inputReciver;
         this.gameChooser = new GameChooser(inputReciver);
     }
 
     public void InitializeGame() {
         IGame iGame = gameChooser.selectingGame();
-        initializeGame(iGame);
+        startGame(iGame);
     }
 
-    private void initializeGame(IGame game) {
+    private void startGame(IGame game) {
         game.start();
     }
 }
