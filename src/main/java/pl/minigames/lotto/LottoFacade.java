@@ -1,15 +1,14 @@
 package pl.minigames.lotto;
 
-import pl.minigames.Playable;
 import pl.minigames.InputReceivable;
-
-import java.util.Set;
+import pl.minigames.Playable;
 
 public class LottoFacade implements Playable {
 
     private final InputReceivable INPUT_RECIVER;
-    private final WinningNumbersProvider winningNumbersProvider;
+    private WinningNumbersProvider winningNumbersProvider;
     private final LottoMessagePrinter messagePrinter = new LottoMessagePrinter();
+    private final LottoMenu lottoMenu;
     private final GameModel gameModel;
     private final ScoreChecker scoreChecker;
     private final String PICK_START_OPTION_MESSAGE = "Type 1 to start game, Type 2 to check numbers by drawing number";
@@ -18,44 +17,24 @@ public class LottoFacade implements Playable {
     private final String ERROR_IN_START_MESSAGE = "Well, there is an error in start..";
 
 
-    public LottoFacade(InputReceivable inputReciver, boolean overrideMethodsForTestPurposes) {
+    public LottoFacade(InputReceivable inputReciver, WinningNumbersProvider providedWinningNumbersProvider) {
         this.INPUT_RECIVER = inputReciver;
-        this.winningNumbersProvider = overrideMethodsForTestPurposes ? new WinningNumbersProvider() {
-
-
-            @Override
-            public Set<Integer> drawingNumbers() {
-                return drawnNumbers;
-            }
-
-            @Override
-            public void setResultForTestPurpose(Set<Integer> collect) {
-                for (Integer i : collect)
-                    drawnNumbers.add(i);
-            }
-
-            @Override
-            public void saveNumbers(Set<Integer> set) {
-
-            }
-        } : new LottoNumberGenerator();
+        this.winningNumbersProvider= new LottoNumberGenerator();
+        if(providedWinningNumbersProvider!=null) { this.winningNumbersProvider = providedWinningNumbersProvider;}
         this.gameModel = new GameModel(inputReciver, winningNumbersProvider);
         this.scoreChecker = new ScoreChecker(inputReciver);
+        this.lottoMenu= new LottoMenu(inputReciver);
     }
 
     @Override
     public String start() {
-        messagePrinter.printLottoMessage(PICK_START_OPTION_MESSAGE);
-        String optionPicked = "";
-        while (!optionPicked.equals(PLAY_OPTION_STRING) || !optionPicked.equals(CHECKSCORE_OPTION_STRING)) {
-            optionPicked = INPUT_RECIVER.receiveSignFromUser();
-            if (optionPicked.equals(PLAY_OPTION_STRING)) return gameModel.play();
-            if (optionPicked.equals(CHECKSCORE_OPTION_STRING)) return scoreChecker.checkScore();
+        String optionPicked = lottoMenu.ChooseOptionToPlayOrCheckscore();
+        switch (optionPicked){
+            case PLAY_OPTION_STRING:
+                return gameModel.play();
+            case CHECKSCORE_OPTION_STRING:
+                return scoreChecker.checkScore();
         }
         return ERROR_IN_START_MESSAGE;
-    }
-
-    public WinningNumbersProvider getWinningNumbersProvider() {
-        return winningNumbersProvider;
     }
 }

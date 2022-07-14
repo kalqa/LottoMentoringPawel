@@ -10,6 +10,9 @@ class LottoMessagePrinter {
     private final String TYPE_NUMBERS_MESSAGE = "Type numbers from 1-99";
     private final String WRONG_NUMBER_TYPED = "Wrong number typed";
 
+    private final String PICK_START_OPTION_MESSAGE = "Type 1 to start game, Type 2 to check numbers by drawing number";
+    private final String ERROR_IN_START_MESSAGE = "Well, there is an error in start..";
+
     public LottoMessagePrinter() {
     }
 
@@ -43,5 +46,12 @@ class LottoMessagePrinter {
     public void printWrongNumberTyped() {
         System.out.println(WRONG_NUMBER_TYPED);
     }
+    public void printStartMenuOption(){
+        System.out.println(PICK_START_OPTION_MESSAGE);
+    }
+    public void printErrorInStartMessage(){
+        System.out.println(ERROR_IN_START_MESSAGE);
+    }
+
 
 }

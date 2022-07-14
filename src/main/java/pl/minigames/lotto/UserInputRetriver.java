@@ -20,21 +20,25 @@ class UserInputRetriver {
     public Set<Integer> getNumbersFromUser() {
         messagePrinter.printTypeNumbersMessage();
         try {
-            while (numbersFromUser.size() < 6) {
-                int number = 0;
-                number = inputReciver.receiveNumberFromUser();
-                if (numbersFromUser.contains(number)) {
-                    messagePrinter.printWrongNumberTyped();
-                }
-                if (checkIfNumberCanBeAdded(number) && !numbersFromUser.contains(number)) {
-                    numbersFromUser.add(number);
-                    messagePrinter.printLottoMessage(ADDING_TO_SET_MESSAGE + number);
-                }
-            }
+            gettingNumbersProcedure();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         return numbersFromUser;
+    }
+
+    private void gettingNumbersProcedure() {
+        while (numbersFromUser.size() < 6) {
+            int number = 0;
+            number = inputReciver.receiveNumberFromUser();
+            if (numbersFromUser.contains(number)) {
+                messagePrinter.printWrongNumberTyped();
+            }
+            if (checkIfNumberCanBeAdded(number) && !numbersFromUser.contains(number)) {
+                numbersFromUser.add(number);
+                messagePrinter.printLottoMessage(ADDING_TO_SET_MESSAGE + number);
+            }
+        }
     }
 
     boolean checkIfNumberCanBeAdded(int number) {

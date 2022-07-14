@@ -10,5 +10,5 @@ public interface WinningNumbersProvider {
 
     void setResultForTestPurpose(Set<Integer> collect);
 
-    void saveNumbers(Set<Integer> set);
+
 }

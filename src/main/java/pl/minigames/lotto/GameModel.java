@@ -6,10 +6,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 class GameModel {
-    private final InputReceivable INPUT_RECIVER;
+    private final InputReceivable inputReceivable;
     private final WinningNumbersProvider winningNumbersProvider;
     private final LottoMessagePrinter messagePrinter = new LottoMessagePrinter();
     private final UserInputRetriver userInputRetriver;
+    private final LottoMenu lottoMenu;
+    private final DataSaver dataSaver = DataSaver.getInstance();
 
     private final String GENERATING_NUMBERS_MESSAGE = "Generating random numbers";
 
@@ -19,10 +21,11 @@ class GameModel {
     private Set<Integer> numbersFromUser = new HashSet<>();
     private Set<Integer> drawnNumbers;
 
-    public GameModel(InputReceivable INPUT_RECIVER, WinningNumbersProvider winningNumbersProvider) {
-        this.INPUT_RECIVER = INPUT_RECIVER;
+    public GameModel(InputReceivable inputReceivable, WinningNumbersProvider winningNumbersProvider) {
+        this.inputReceivable = inputReceivable;
         this.winningNumbersProvider = winningNumbersProvider;
-        this.userInputRetriver = new UserInputRetriver(INPUT_RECIVER);
+        this.userInputRetriver = new UserInputRetriver(inputReceivable);
+        this.lottoMenu=new LottoMenu(inputReceivable);
     }
 
     public String play() {
@@ -33,7 +36,8 @@ class GameModel {
         messagePrinter.printNumbers(drawnNumbers);
         messagePrinter.printWaitingMessage();
         messagePrinter.printLottoMessage(getWinOrLooseMessage());
-        winningNumbersProvider.saveNumbers(drawnNumbers);
+        if(winningNumbersProvider.getClass().equals(LottoNumberGenerator.class)){
+            dataSaver.saveData(drawnNumbers);}
         return getWinOrLooseMessage();
     }
 

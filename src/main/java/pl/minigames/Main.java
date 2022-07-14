@@ -10,7 +10,7 @@ public class Main {
         InputReceivable inputReceivable = new ScannerInputReceiver();
         MessagePrinter messagePrinter = new MessagePrinter();
         UserMenu userMenu = new UserMenu(inputReceivable);
-        MiniGames miniGames = new MiniGames(inputReceivable, messagePrinter, userMenu, false);
+        MiniGames miniGames = new MiniGames(inputReceivable, messagePrinter, userMenu, null, false);
         miniGames.startProgramAndGetFinalGameResult();
     }
 }

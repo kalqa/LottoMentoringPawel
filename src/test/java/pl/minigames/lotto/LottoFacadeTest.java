@@ -19,8 +19,9 @@ class LottoFacadeTest {
         //Given
         String[] array = new String[]{"1", "1"};
         int[] ints = new int[]{1, 3, 2, 7, 5, 6};
-        LottoFacade facade = new LottoFacade(new TestInputReciver(array, ints), true);
-        facade.getWinningNumbersProvider().setResultForTestPurpose(Arrays.stream(ints)
+        TestNumberGenerator testNumberGenerator = new TestNumberGenerator();
+        LottoFacade facade = new LottoFacade(new TestInputReciver(array, ints),testNumberGenerator);
+        testNumberGenerator.setResultForTestPurpose(Arrays.stream(ints)
                 .boxed()
                 .sorted()
                 .collect(Collectors.toSet()));
@@ -36,8 +37,9 @@ class LottoFacadeTest {
         //Given
         String[] array = new String[]{"1", "1"};
         int[] ints = new int[]{1, 3, 2, 7, 5, 6};
-        LottoFacade facade = new LottoFacade(new TestInputReciver(array, ints), true);
-        facade.getWinningNumbersProvider().setResultForTestPurpose(Arrays.stream(new int[]{7, 8, 9, 10, 11, 12})
+        TestNumberGenerator testNumberGenerator = new TestNumberGenerator();
+        LottoFacade facade = new LottoFacade(new TestInputReciver(array, ints),testNumberGenerator);
+        testNumberGenerator.setResultForTestPurpose(Arrays.stream(new int[]{7, 8, 9, 10, 11, 12})
                 .boxed()
                 .sorted()
                 .collect(Collectors.toSet()));
@@ -53,7 +55,8 @@ class LottoFacadeTest {
         //Given
         String[] array = new String[]{"2", "0"};
         int[] ints = new int[]{1, 3, 2, 7, 5, 6};
-        LottoFacade facade = new LottoFacade(new TestInputReciver(array, ints), true);
+        TestNumberGenerator testNumberGenerator = new TestNumberGenerator();
+        LottoFacade facade = new LottoFacade(new TestInputReciver(array, ints),testNumberGenerator);
 
         //when
         String result = facade.start();
@@ -67,7 +70,8 @@ class LottoFacadeTest {
         //Given
         String[] array = new String[]{"2", "0"};
         int[] ints = new int[]{77, 3, 2, 7, 5, 6};
-        LottoFacade facade = new LottoFacade(new TestInputReciver(array, ints), true);
+        TestNumberGenerator testNumberGenerator = new TestNumberGenerator();
+        LottoFacade facade = new LottoFacade(new TestInputReciver(array, ints), testNumberGenerator);
 
         //when
         String result = facade.start();

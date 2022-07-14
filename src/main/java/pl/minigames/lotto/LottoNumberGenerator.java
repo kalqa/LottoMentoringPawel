@@ -8,10 +8,8 @@ class LottoNumberGenerator implements WinningNumbersProvider {
     private final int NUMBERS_TO_DRAW = 6;
     private final int MAX_DRAWN_NUMBER_BOUND = 100;
     private final int MIN_DRAWN_NUMBER_BOUND = 0;
-    private DataLoader dataLoader = DataLoader.getInstance();
-    private DataSaver dataSaver = DataSaver.getInstance();
 
-    private Set<Integer> drawnNumbers;
+    private Set<Integer> drawnNumbers = new HashSet<>();
 
     public LottoNumberGenerator() {
     }
@@ -21,8 +19,8 @@ class LottoNumberGenerator implements WinningNumbersProvider {
 
     }
 
+    @Override
     public Set<Integer> drawingNumbers() {
-        drawnNumbers = new HashSet<>();
         while (drawnNumbers.size() < NUMBERS_TO_DRAW) {
             Random random = new Random();
             Integer number = random.nextInt(MAX_DRAWN_NUMBER_BOUND);
@@ -30,10 +28,4 @@ class LottoNumberGenerator implements WinningNumbersProvider {
         }
         return drawnNumbers;
     }
-
-    public void saveNumbers(Set<Integer> set) {
-        dataSaver.saveData(set);
-    }
-
-
 }
